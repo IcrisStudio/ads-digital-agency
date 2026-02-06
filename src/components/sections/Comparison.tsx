@@ -105,6 +105,7 @@ export const Comparison = () => {
           </motion.div>
         </div>
       </div>
+      <h1></h1>
     </section>
   );
 };
