@@ -24,7 +24,7 @@ const generateRandomPosition = (radius = 170) => {
   };
 };
 
-/* ------------------ floating metrics (only used on desktop) ------------------ */
+/* ------------------ floating metrics ------------------ */
 
 const orbitingMetrics = [
   { icon: TrendingUp, labelKey: "revenue", value: "+32%", delay: 0.2, color: "text-emerald-500", bg: "bg-emerald-500/10" },
@@ -66,7 +66,7 @@ export const Hero = () => {
 
   return (
     <section className="relative min-h-[90vh] flex items-center pt-20 pb-16 md:pt-24 md:pb-20 overflow-hidden">
-      {/* Background gradient & grid */}
+      {/* Background */}
       <div className="absolute inset-0 bg-gradient-hero pointer-events-none" />
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -77,7 +77,8 @@ export const Hero = () => {
 
       <div className="container-tight relative z-10 px-5 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
-          {/* LEFT - Content (always visible) */}
+
+          {/* LEFT */}
           <div className="text-center lg:text-left order-2 lg:order-1">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -86,7 +87,7 @@ export const Hero = () => {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6 mx-auto lg:mx-0"
             >
               <Zap className="w-4 h-4" />
-              {t("premierGrowth")}
+              Performance-Driven Digital Marketing
             </motion.div>
 
             <motion.h1
@@ -95,9 +96,9 @@ export const Hero = () => {
               transition={{ duration: 0.7, delay: 0.1 }}
               className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight mb-6"
             >
-              {t("beyondLimits")}
+              Grow Your Business with
               <br className="hidden sm:block" />
-              <span className="text-accent">{t("salesOptimized")}</span>
+              <span className="text-accent">Predictable Leads & Sales</span>
             </motion.h1>
 
             <motion.p
@@ -106,7 +107,8 @@ export const Hero = () => {
               transition={{ duration: 0.7, delay: 0.2 }}
               className="text-base sm:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 leading-relaxed"
             >
-              {t("heroDescription")}
+              We help brands scale using data-driven digital marketing.
+              Not just views or clicks, but real, measurable revenue that grows month after month.
             </motion.p>
 
             <motion.div
@@ -125,7 +127,6 @@ export const Hero = () => {
               </Button>
             </motion.div>
 
-            {/* Stats - smaller on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -140,10 +141,9 @@ export const Hero = () => {
             </motion.div>
           </div>
 
-          {/* RIGHT - Visual (hidden on mobile, visible ≥ lg) */}
+          {/* RIGHT */}
           <div className="relative hidden lg:flex lg:order-2 items-center justify-center h-[500px] xl:h-[620px]">
             <div className="relative w-[420px] xl:w-[500px] h-[420px] xl:h-[500px]">
-              {/* Main image - no crop, object-contain */}
               <motion.img
                 src={marketerImage}
                 alt="Digital Marketing Expert"
@@ -153,7 +153,6 @@ export const Hero = () => {
                 className="absolute inset-0 z-10 w-full h-full object-contain drop-shadow-2xl pointer-events-none"
               />
 
-              {/* Floating metrics - subtle orbit */}
               {orbitingMetrics.map((metric) => (
                 <motion.div
                   key={metric.labelKey}
@@ -191,6 +190,7 @@ export const Hero = () => {
               <span>Live performance metrics</span>
             </div>
           </div>
+
         </div>
       </div>
     </section>

@@ -1,20 +1,46 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Calculator, Zap, Users, TrendingUp, BadgePercent } from "lucide-react";
+import {
+  Calculator,
+  Zap,
+  Users,
+  TrendingUp,
+  BadgePercent,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { useLanguage } from "@/contexts/LanguageContext";
+
+/* ------------------ Data ------------------ */
 
 const categories = [
   { id: "service", labelEn: "Service Based", labelNp: "सेवा आधारित" },
   { id: "product", labelEn: "Product Based", labelNp: "उत्पादन आधारित" },
 ];
 
+/* ------------------ Animation ------------------ */
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+};
+
+/* ------------------ Component ------------------ */
+
 export const AdSimulator = () => {
-  const { t, language } = useLanguage();
+  const { language } = useLanguage();
+
   const [companyName, setCompanyName] = useState("");
-  const [category, setCategory] = useState<string>("");
+  const [category, setCategory] = useState("");
   const [budget, setBudget] = useState(1);
   const [days, setDays] = useState(1);
 
@@ -29,256 +55,202 @@ export const AdSimulator = () => {
   }, [budget, days]);
 
   const handleWhatsAppSubmit = () => {
-    const categoryLabel = categories.find(c => c.id === category)?.[language === 'en' ? 'labelEn' : 'labelNp'] || category;
+    const categoryLabel =
+      categories.find(c => c.id === category)?.[
+        language === "en" ? "labelEn" : "labelNp"
+      ] || category;
+
     const message = `Hi ADS Digital Agency!
 
-📌 *Brand Details:*
-• Company: ${companyName || 'Not specified'}
-• Business Type: ${categoryLabel}
+Company: ${companyName || "Not specified"}
+Business Type: ${categoryLabel}
 
-💰 *Ad Campaign Request:*
-• Daily Budget: $${budget}
-• Duration: ${days} days
-• Total Budget: $${calculations.totalBudget}
-• Total Cost: NPR ${calculations.totalNPR.toLocaleString()}
-• Rate Used: NPR ${calculations.rate}/$1 ${calculations.isDiscounted ? '(Discounted!)' : ''}
+Daily Budget: $${budget}
+Duration: ${days} days
+Total Budget: $${calculations.totalBudget}
+Total Cost: NPR ${calculations.totalNPR}
 
-📊 *Estimated Reach:*
-${calculations.minReach.toLocaleString()} - ${calculations.maxReach.toLocaleString()} people
+Estimated Reach:
+${calculations.minReach} - ${calculations.maxReach} people`;
 
-I'm interested in scaling my brand with your services!`;
-
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/9779823974222?text=${encodedMessage}`, '_blank');
+    window.open(
+      `https://wa.me/9779823974222?text=${encodeURIComponent(message)}`,
+      "_blank"
+    );
   };
 
   return (
-    <section id="simulator" className="py-24 bg-soft-white">
-      <div className="container-tight">
+    <section id="simulator" className="relative py-16 md:py-24">
+      <div className="absolute inset-0 bg-gradient-services pointer-events-none" />
+
+      <div className="container-tight relative z-10">
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center max-w-2xl mx-auto mb-12"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 text-accent text-sm font-medium mb-4">
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-xs font-medium mb-4">
             <Calculator className="w-4 h-4" />
-            {language === 'en' ? 'AD Boosting Simulator' : 'विज्ञापन बूस्टिङ सिमुलेटर'}
+            {language === "en"
+              ? "Ad Budget Simulator"
+              : "विज्ञापन बजेट सिमुलेटर"}
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            {language === 'en' ? 'Scale Your Brand.' : 'आफ्नो ब्रान्ड स्केल गर्नुहोस्।'}
+
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3">
+            {language === "en"
+              ? "Plan Your Ad Investment"
+              : "आफ्नो विज्ञापन योजना बनाउनुहोस्"}
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            {language === 'en'
-              ? 'Calculate your ad reach and investment instantly. Get real-time pricing based on your budget.'
-              : 'तपाईंको विज्ञापन पहुँच र लगानी तुरुन्तै गणना गर्नुहोस्।'}
+
+          <p className="text-sm sm:text-base text-muted-foreground">
+            {language === "en"
+              ? "Estimate reach, cost, and scale your brand with confidence."
+              : "लागत, पहुँच र परिणाम अनुमान गर्नुहोस्।"}
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* Left Side - Form */}
+        {/* Content */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid lg:grid-cols-2 gap-6 max-w-5xl mx-auto"
+        >
+          {/* Left: Form */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-card rounded-3xl p-8 shadow-card border border-border"
+            variants={itemVariants}
+            className="p-6 rounded-2xl border border-white/[0.08] bg-white/5 backdrop-blur-sm"
           >
-            <h3 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                <Zap className="w-5 h-5 text-primary" />
+            <h3 className="flex items-center gap-3 text-lg font-semibold mb-6">
+              <div className="p-2 rounded-xl bg-accent/10">
+                <Zap className="w-5 h-5 text-accent" />
               </div>
-              {language === 'en' ? 'Campaign Details' : 'अभियान विवरण'}
+              {language === "en" ? "Campaign Details" : "अभियान विवरण"}
             </h3>
 
-            {/* Company Name */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                {language === 'en' ? 'Company Name' : 'कम्पनीको नाम'}
-              </label>
+            <div className="space-y-5">
               <Input
-                placeholder={language === 'en' ? 'Enter your brand name' : 'आफ्नो ब्रान्डको नाम लेख्नुहोस्'}
+                placeholder={
+                  language === "en"
+                    ? "Company name"
+                    : "कम्पनीको नाम"
+                }
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
-                className="h-12"
+                className="h-11"
               />
-            </div>
 
-            {/* Category Selection */}
-            <div className="mb-6">
-              <label className="block text-sm font-medium text-foreground mb-2">
-                {language === 'en' ? 'Business Category' : 'व्यापार श्रेणी'}
-              </label>
               <div className="grid grid-cols-2 gap-3">
-                {categories.map((cat) => (
+                {categories.map(cat => (
                   <button
                     key={cat.id}
                     onClick={() => setCategory(cat.id)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-300 text-left ${category === cat.id
-                        ? 'border-primary bg-primary/5 text-primary'
-                        : 'border-border hover:border-primary/50 text-muted-foreground'
-                      }`}
+                    className={`p-4 rounded-xl border text-sm transition-colors ${
+                      category === cat.id
+                        ? "border-accent bg-accent/10 text-accent"
+                        : "border-white/[0.08] text-muted-foreground hover:border-accent"
+                    }`}
                   >
-                    <span className="font-medium">
-                      {language === 'en' ? cat.labelEn : cat.labelNp}
-                    </span>
+                    {language === "en" ? cat.labelEn : cat.labelNp}
                   </button>
                 ))}
               </div>
-            </div>
 
-            {/* Budget Slider */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-3">
-                <label className="text-sm font-medium text-foreground">
-                  {language === 'en' ? 'Daily Budget' : 'दैनिक बजेट'}
-                </label>
-                <span className="text-2xl font-bold text-primary">${budget}</span>
+              <div>
+                <div className="flex justify-between mb-2 text-sm">
+                  <span>{language === "en" ? "Daily Budget" : "दैनिक बजेट"}</span>
+                  <span className="font-semibold text-accent">${budget}</span>
+                </div>
+                <Slider
+                  value={[budget]}
+                  onValueChange={(v) => setBudget(v[0])}
+                  min={1}
+                  max={100}
+                  step={1}
+                />
               </div>
-              <Slider
-                value={[budget]}
-                onValueChange={(value) => setBudget(value[0])}
-                min={1}
-                max={500}
-                step={1}
-                className="w-full"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                <span>$1</span>
-                <span>$500</span>
-              </div>
-            </div>
 
-            {/* Days Slider */}
-            <div className="mb-6">
-              <div className="flex justify-between items-center mb-3">
-                <label className="text-sm font-medium text-foreground">
-                  {language === 'en' ? 'Campaign Duration' : 'अभियान अवधि'}
-                </label>
-                <span className="text-2xl font-bold text-primary">{days} {language === 'en' ? 'Days' : 'दिन'}</span>
-              </div>
-              <Slider
-                value={[days]}
-                onValueChange={(value) => setDays(value[0])}
-                min={1}
-                max={30}
-                step={1}
-                className="w-full"
-              />
-              <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                <span>1 {language === 'en' ? 'Days' : 'दिन'}</span>
-                <span>30 {language === 'en' ? 'Days' : 'दिन'}</span>
+              <div>
+                <div className="flex justify-between mb-2 text-sm">
+                  <span>{language === "en" ? "Duration" : "अवधि"}</span>
+                  <span className="font-semibold text-accent">
+                    {days} {language === "en" ? "Days" : "दिन"}
+                  </span>
+                </div>
+                <Slider
+                  value={[days]}
+                  onValueChange={(v) => setDays(v[0])}
+                  min={1}
+                  max={30}
+                  step={1}
+                />
               </div>
             </div>
           </motion.div>
 
-          {/* Right Side - Results */}
+          {/* Right: Results */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-primary rounded-3xl p-8 shadow-float text-primary-foreground relative overflow-hidden"
+            variants={itemVariants}
+            className="p-6 rounded-2xl border border-white/[0.08] bg-white/5 backdrop-blur-sm"
           >
-            {/* Background decoration */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-            <div className="absolute bottom-0 left-0 w-48 h-48 bg-accent/10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2" />
+            <h3 className="flex items-center gap-3 text-lg font-semibold mb-6">
+              <div className="p-2 rounded-xl bg-accent/10">
+                <TrendingUp className="w-5 h-5 text-accent" />
+              </div>
+              {language === "en" ? "Estimated Results" : "अनुमानित नतिजा"}
+            </h3>
 
-            <div className="relative z-10">
-              <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-accent/30 flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-accent" />
-                </div>
-                {language === 'en' ? 'Your Investment' : 'तपाईंको लगानी'}
-              </h3>
+            {calculations.isDiscounted && (
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/15 text-accent text-xs font-medium mb-4">
+                <BadgePercent className="w-4 h-4" />
+                Discount Applied
+              </div>
+            )}
 
-              {/* Discount Badge */}
-              {calculations.isDiscounted && (
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent text-accent-foreground text-sm font-bold mb-6"
-                >
-                  <BadgePercent className="w-4 h-4" />
-                  {language === 'en' ? 'Discount Applied! NPR 175/$1' : 'छुट लागू! रु १७५/$१'}
-                </motion.div>
-              )}
-
-              {/* Rate Display */}
-              <div className="bg-accent/20 rounded-2xl p-4 mb-6 border border-accent/30">
-                <div className="text-sm text-primary-foreground/80 mb-1">
-                  {language === 'en' ? 'Exchange Rate' : 'विनिमय दर'}
-                </div>
-                <div className="text-3xl font-bold text-accent">
-                  $1 = NPR {calculations.rate}
-                </div>
-                {!calculations.isDiscounted && (
-                  <p className="text-xs text-primary-foreground/70 mt-1">
-                    {language === 'en'
-                      ? 'Spend $100+ total to get NPR 175/$1 rate!'
-                      : 'रु १७५/$१ दर पाउन $१००+ खर्च गर्नुहोस्!'}
-                  </p>
-                )}
+            <div className="space-y-4 mb-6">
+              <div className="flex justify-between text-sm">
+                <span>Total Budget</span>
+                <span className="font-semibold">
+                  ${calculations.totalBudget}
+                </span>
               </div>
 
-              {/* Stats Grid */}
-              <div className="grid grid-cols-2 gap-4 mb-6">
-                <div className="bg-white/10 rounded-xl p-4 border border-white/10">
-                  <div className="text-sm text-primary-foreground/80 mb-1">
-                    {language === 'en' ? 'Total Budget' : 'कुल बजेट'}
-                  </div>
-                  <div className="text-2xl font-bold text-accent">${calculations.totalBudget}</div>
-                </div>
-                <div className="bg-white/10 rounded-xl p-4 border border-white/10">
-                  <div className="text-sm text-primary-foreground/80 mb-1">
-                    {language === 'en' ? 'Duration' : 'अवधि'}
-                  </div>
-                  <div className="text-2xl font-bold text-accent">{days} {language === 'en' ? 'Days' : 'दिन'}</div>
-                </div>
+              <div className="flex justify-between text-sm">
+                <span>Exchange Rate</span>
+                <span className="font-semibold">
+                  NPR {calculations.rate}/$
+                </span>
               </div>
 
-              {/* Total Price */}
-              <div className="bg-accent/20 rounded-2xl p-6 mb-6 border border-accent/30 text-center">
-                <div className="text-sm text-primary-foreground/80 mb-2">
-                  {language === 'en' ? 'Total Investment' : 'कुल लगानी'}
-                </div>
-                <motion.div
-                  key={calculations.totalNPR}
-                  initial={{ scale: 0.8 }}
-                  animate={{ scale: 1 }}
-                  className="text-4xl md:text-5xl font-bold text-white"
-                >
+              <div className="flex justify-between text-sm">
+                <span>Total Cost</span>
+                <span className="font-semibold text-accent">
                   NPR {calculations.totalNPR.toLocaleString()}
-                </motion.div>
+                </span>
               </div>
 
-              {/* Estimated Reach */}
-              <div className="flex items-center gap-3 bg-white/10 rounded-xl p-4 mb-6 border border-white/10">
-                <div className="w-10 h-10 rounded-full bg-accent/30 flex items-center justify-center">
-                  <Users className="w-5 h-5 text-accent" />
-                </div>
-                <div>
-                  <div className="text-sm text-primary-foreground/80">
-                    {language === 'en' ? 'Estimated Reach' : 'अनुमानित पहुँच'}
-                  </div>
-                  <div className="text-xl font-bold text-white">
-                    {calculations.minReach.toLocaleString()} - {calculations.maxReach.toLocaleString()} {language === 'en' ? 'people' : 'जना'}
-                  </div>
-                </div>
+              <div className="flex items-center gap-3 text-sm">
+                <Users className="w-4 h-4 text-accent" />
+                {calculations.minReach.toLocaleString()} –{" "}
+                {calculations.maxReach.toLocaleString()} reach
               </div>
-
-              {/* CTA Button */}
-              <Button
-                onClick={handleWhatsAppSubmit}
-                disabled={calculations.totalBudget < 10}
-                className="w-full h-14 text-lg font-bold bg-accent text-accent-foreground hover:bg-accent/90 transition-all duration-300 shadow-lg"
-              >
-                {language === 'en' ? 'Scale My Brand Now' : 'मेरो ब्रान्ड स्केल गर्नुहोस्'}
-              </Button>
             </div>
+
+            <Button
+              onClick={handleWhatsAppSubmit}
+              disabled={calculations.totalBudget < 10}
+              className="w-full"
+            >
+              {language === "en"
+                ? "Scale My Brand"
+                : "मेरो ब्रान्ड स्केल गर्नुहोस्"}
+            </Button>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

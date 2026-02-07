@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Instagram, Facebook, MessageCircle } from "lucide-react";
+import { Instagram, Facebook, Music, Music2 } from "lucide-react";
 import Logo from "@/assets/logo.png";
 
 export const Footer = () => {
@@ -19,7 +19,7 @@ export const Footer = () => {
               <div className="w-10 h-10 rounded-xl bg-primary-foreground flex items-center justify-center">
                 <img src={Logo} alt="ADS Digital Agency" className="w-10 h-10 rounded-xl object-cover" />
               </div>
-              <span className="font-bold text-xl">ADS Digital Agency </span>
+              <span className="font-bold text-xl">ADS Digital Agency</span>
             </div>
             <p className="text-primary-foreground/70 max-w-sm">
               Turning average brands into digital leaders through cinematic precision and strategic excellence.
@@ -60,25 +60,28 @@ export const Footer = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h4 className="font-semibold mb-4">Socials</h4>
+            <h4 className="font-semibold mb-4">Follow Us</h4>
             <div className="flex gap-4">
               <a
-                href="https://www.instagram.com/ads.digital.agency/" target="_blank"
+                href="https://www.instagram.com/ads.digital.agency/"
+                target="_blank"
                 className="w-10 h-10 rounded-xl bg-primary-foreground/10 hover:bg-primary-foreground/20 flex items-center justify-center transition-colors"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a
-                href="https://www.facebook.com/profile.php?id=61553054409471" target="_blank"
+                href="https://www.facebook.com/profile.php?id=61553054409471"
+                target="_blank"
                 className="w-10 h-10 rounded-xl bg-primary-foreground/10 hover:bg-primary-foreground/20 flex items-center justify-center transition-colors"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
-                href="#"
+                href="https://www.tiktok.com/@ads.digital.agenc3"
+                target="_blank"
                 className="w-10 h-10 rounded-xl bg-primary-foreground/10 hover:bg-primary-foreground/20 flex items-center justify-center transition-colors"
               >
-                <MessageCircle className="w-5 h-5" />
+                <Music2 className="w-5 h-5" />
               </a>
             </div>
           </motion.div>
@@ -86,7 +89,7 @@ export const Footer = () => {
 
         <div className="border-t border-primary-foreground/10 pt-8 text-center">
           <p className="text-primary-foreground/50 text-sm">
-            © 2026 ADS Digital Agency  • Built For Excellence
+            © 2026 ADS Digital Agency • Built For Excellence
           </p>
         </div>
       </div>
