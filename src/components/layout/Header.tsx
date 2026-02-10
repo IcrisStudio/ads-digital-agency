@@ -47,7 +47,7 @@ export const Header = () => {
           className="flex items-center gap-2"
         >
           <img src={Logo} alt="ADS Digital Agency" className="w-10 h-10 rounded-xl object-cover" />
-          <span className="font-bold text-xl text-foreground">ADS Digital</span>
+          <span className="font-bold text-xl text-foreground">ADS Digital Agency Pvt. Ltd.</span>
         </motion.a>
 
         {/* Desktop Navigation */}

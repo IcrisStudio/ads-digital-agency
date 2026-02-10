@@ -19,7 +19,7 @@ export const Footer = () => {
               <div className="w-10 h-10 rounded-xl bg-primary-foreground flex items-center justify-center">
                 <img src={Logo} alt="ADS Digital Agency" className="w-10 h-10 rounded-xl object-cover" />
               </div>
-              <span className="font-bold text-xl">ADS Digital Agency</span>
+              <span className="font-bold text-xl">ADS Digital Agency Pvt. Ltd.</span>
             </div>
             <p className="text-primary-foreground/70 max-w-sm">
               Turning average brands into digital leaders through cinematic precision and strategic excellence.
