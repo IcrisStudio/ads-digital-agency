@@ -77,7 +77,7 @@ const CustomPricing = () => {
         if (includeTargeting) selectedServices.push("Advanced Targeting");
 
         const message = `Hi! I'd like a custom package:\n\n${selectedServices.join("\n")}\n\nEstimated Total: Rs. ${total.toLocaleString()}`;
-        const whatsappUrl = `https://wa.me/9779840000000?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = `https://wa.me/9779823974222?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, "_blank");
     };
 

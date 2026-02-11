@@ -20,9 +20,33 @@ import {
     Rocket,
     Zap,
     Shield,
-    HeadphonesIcon,
+    Headphones,
     TrendingUp
 } from "lucide-react";
+
+const SERVICES = [
+    "Meta Ads Boosting",
+    "Content Creation",
+    "Meta Verification Tick",
+    "Post Designing",
+    "Social Media Handling",
+    "Video Editing",
+    "Content Writing",
+];
+
+const BUDGET_RANGES = [
+    "Below Rs. 20,000/month",
+    "Rs. 20,000 - Rs. 40,000/month",
+    "Rs. 40,000 - Rs. 60,000/month",
+    "Rs. 60,000+/month",
+];
+
+const TIMELINES = [
+    "ASAP (Within 1 week)",
+    "1-2 weeks",
+    "2-4 weeks",
+    "Flexible timeline",
+];
 
 const GetQuote = () => {
     const [formData, setFormData] = useState({
@@ -38,30 +62,6 @@ const GetQuote = () => {
         services: [] as string[],
     });
 
-    const services = [
-        "Meta Ads Boosting",
-        "Content Creation",
-        "Meta Verification Tick",
-        "Post Designing",
-        "Social Media Handling",
-        "Video Editing",
-        "Content Writing",
-    ];
-
-    const budgetRanges = [
-        "Below Rs. 20,000/month",
-        "Rs. 20,000 - Rs. 40,000/month",
-        "Rs. 40,000 - Rs. 60,000/month",
-        "Rs. 60,000+/month",
-    ];
-
-    const timelines = [
-        "ASAP (Within 1 week)",
-        "1-2 weeks",
-        "2-4 weeks",
-        "Flexible timeline",
-    ];
-
     const handleServiceToggle = (service: string) => {
         setFormData((prev) => ({
             ...prev,
@@ -69,6 +69,10 @@ const GetQuote = () => {
                 ? prev.services.filter((s) => s !== service)
                 : [...prev.services, service],
         }));
+    };
+
+    const updateField = (field: keyof typeof formData, value: any) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -86,7 +90,7 @@ ${formData.phone ? `Phone: ${formData.phone}` : ''}
 ${formData.website ? `Website: ${formData.website}` : ''}
 
 ✅ *Services Needed:*
-${formData.services.map(s => `• ${s}`).join('\n')}
+${formData.services.length > 0 ? formData.services.map(s => `• ${s}`).join('\n') : 'None specified'}
 
 💰 *Budget Range:*
 ${formData.budgetRange || 'Not specified'}
@@ -183,9 +187,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                                 id="fullName"
                                                                 placeholder="John Doe"
                                                                 value={formData.fullName}
-                                                                onChange={(e) =>
-                                                                    setFormData({ ...formData, fullName: e.target.value })
-                                                                }
+                                                                onChange={(e) => updateField('fullName', e.target.value)}
                                                                 required
                                                             />
                                                         </div>
@@ -199,9 +201,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                                 type="email"
                                                                 placeholder="john@company.com"
                                                                 value={formData.email}
-                                                                onChange={(e) =>
-                                                                    setFormData({ ...formData, email: e.target.value })
-                                                                }
+                                                                onChange={(e) => updateField('email', e.target.value)}
                                                                 required
                                                             />
                                                         </div>
@@ -213,9 +213,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                                 type="tel"
                                                                 placeholder="+977 98X-XXXXXXX"
                                                                 value={formData.phone}
-                                                                onChange={(e) =>
-                                                                    setFormData({ ...formData, phone: e.target.value })
-                                                                }
+                                                                onChange={(e) => updateField('phone', e.target.value)}
                                                             />
                                                         </div>
 
@@ -225,9 +223,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                                 id="company"
                                                                 placeholder="Your Company"
                                                                 value={formData.company}
-                                                                onChange={(e) =>
-                                                                    setFormData({ ...formData, company: e.target.value })
-                                                                }
+                                                                onChange={(e) => updateField('company', e.target.value)}
                                                             />
                                                         </div>
 
@@ -238,9 +234,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                                 type="url"
                                                                 placeholder="https://yourwebsite.com"
                                                                 value={formData.website}
-                                                                onChange={(e) =>
-                                                                    setFormData({ ...formData, website: e.target.value })
-                                                                }
+                                                                onChange={(e) => updateField('website', e.target.value)}
                                                             />
                                                         </div>
                                                     </div>
@@ -252,11 +246,17 @@ ${formData.currentMarketing || 'None mentioned'}
                                                         Services Needed <span className="text-destructive">*</span>
                                                     </Label>
                                                     <div className="grid md:grid-cols-2 gap-3">
-                                                        {services.map((service) => (
+                                                        {SERVICES.map((service) => (
                                                             <div
                                                                 key={service}
                                                                 className="flex items-center space-x-2 p-3 rounded-lg border hover:bg-accent/5 transition-colors cursor-pointer"
-                                                                onClick={() => handleServiceToggle(service)}
+                                                                onClick={(e) => {
+                                                                    // Only trigger if not clicking elements already handled by Label/Checkbox
+                                                                    const target = e.target as HTMLElement;
+                                                                    if (!['BUTTON', 'INPUT', 'LABEL', 'SPAN'].includes(target.tagName)) {
+                                                                        handleServiceToggle(service);
+                                                                    }
+                                                                }}
                                                             >
                                                                 <Checkbox
                                                                     id={service}
@@ -266,6 +266,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                                 <Label
                                                                     htmlFor={service}
                                                                     className="cursor-pointer flex-1"
+                                                                    onClick={(e) => e.stopPropagation()} // Prevent double trigger from label
                                                                 >
                                                                     {service}
                                                                 </Label>
@@ -282,12 +283,10 @@ ${formData.currentMarketing || 'None mentioned'}
                                                             id="budget"
                                                             className="w-full px-3 py-2 rounded-md border border-input bg-background"
                                                             value={formData.budgetRange}
-                                                            onChange={(e) =>
-                                                                setFormData({ ...formData, budgetRange: e.target.value })
-                                                            }
+                                                            onChange={(e) => updateField('budgetRange', e.target.value)}
                                                         >
                                                             <option value="">Select budget range</option>
-                                                            {budgetRanges.map((range) => (
+                                                            {BUDGET_RANGES.map((range) => (
                                                                 <option key={range} value={range}>
                                                                     {range}
                                                                 </option>
@@ -301,12 +300,10 @@ ${formData.currentMarketing || 'None mentioned'}
                                                             id="timeline"
                                                             className="w-full px-3 py-2 rounded-md border border-input bg-background"
                                                             value={formData.timeline}
-                                                            onChange={(e) =>
-                                                                setFormData({ ...formData, timeline: e.target.value })
-                                                            }
+                                                            onChange={(e) => updateField('timeline', e.target.value)}
                                                         >
                                                             <option value="">Select timeline</option>
-                                                            {timelines.map((time) => (
+                                                            {TIMELINES.map((time) => (
                                                                 <option key={time} value={time}>
                                                                     {time}
                                                                 </option>
@@ -325,9 +322,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                         placeholder="What are you hoping to achieve? (e.g., increase brand awareness, drive more sales, improve engagement...)"
                                                         rows={4}
                                                         value={formData.goals}
-                                                        onChange={(e) =>
-                                                            setFormData({ ...formData, goals: e.target.value })
-                                                        }
+                                                        onChange={(e) => updateField('goals', e.target.value)}
                                                         required
                                                     />
                                                 </div>
@@ -340,9 +335,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                         placeholder="Tell us about your current marketing activities, if any..."
                                                         rows={3}
                                                         value={formData.currentMarketing}
-                                                        onChange={(e) =>
-                                                            setFormData({ ...formData, currentMarketing: e.target.value })
-                                                        }
+                                                        onChange={(e) => updateField('currentMarketing', e.target.value)}
                                                     />
                                                 </div>
 
@@ -454,7 +447,7 @@ ${formData.currentMarketing || 'None mentioned'}
                                                 <span className="text-sm">Proven track record of success</span>
                                             </div>
                                             <div className="flex items-start gap-2">
-                                                <HeadphonesIcon className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                                                <Headphones className="w-5 h-5 text-accent shrink-0 mt-0.5" />
                                                 <span className="text-sm">24/7 support and monitoring</span>
                                             </div>
                                             <div className="flex items-start gap-2">
@@ -499,7 +492,7 @@ ${formData.currentMarketing || 'None mentioned'}
                 <Footer />
                 <WhatsAppButton />
             </main>
-        </LanguageProvider>
+        </LanguageProvider >
     );
 };
 
