@@ -16,7 +16,7 @@ const SOCIAL_LINKS = [
     {
         name: "Website",
         icon: Globe,
-        url: "https://adsdigitalagency.com",
+        url: "https://ads-digital-agency.com/",
         color: "bg-blue-600",
         description: "Official Website"
     },
