@@ -13,6 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import {
     ArrowRight,
     Phone,
+    MessageCircle,
     Mail,
     CheckCircle2,
     Clock,
@@ -138,10 +139,10 @@ ${formData.currentMarketing || 'None mentioned'}
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                                <a href="tel:+9779823974222" className="inline-flex">
+                                <a href="https://wa.me/9779823974222" target="_blank" rel="noopener noreferrer" className="inline-flex">
                                     <Button size="lg" variant="accent" className="gap-2">
-                                        <Phone className="w-5 h-5" />
-                                        Call +977 982-3974222
+                                        <MessageCircle className="w-5 h-5 fill-current" />
+                                        WhatsApp +977 982-3974222
                                     </Button>
                                 </a>
                                 <a href="mailto:adsdigitalagency50@gmail.com" className="inline-flex">
@@ -474,10 +475,10 @@ ${formData.currentMarketing || 'None mentioned'}
                                                         Call us directly for an immediate consultation
                                                     </p>
                                                 </div>
-                                                <a href="tel:+9779823974222">
+                                                <a href="https://wa.me/9779823974222" target="_blank" rel="noopener noreferrer">
                                                     <Button variant="default" size="lg" className="w-full gap-2">
-                                                        <Phone className="w-5 h-5" />
-                                                        Call +977 982-3974222
+                                                        <MessageCircle className="w-5 h-5 fill-current" />
+                                                        WhatsApp +977 982-3974222
                                                     </Button>
                                                 </a>
                                             </div>

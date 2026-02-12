@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Phone, Instagram, Send, Facebook } from "lucide-react";
+import { MessageCircle, Instagram, Send, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,11 +52,13 @@ export const Contact = () => {
             >
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-accent" />
+                  <MessageCircle className="w-6 h-6 text-accent fill-current" />
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">Call Us</div>
-                  <div className="font-semibold text-foreground">+977 982-3974222</div>
+                  <div className="text-sm text-muted-foreground">WhatsApp Us</div>
+                  <a href="https://wa.me/9779823974222" target="_blank" rel="noopener noreferrer">
+                    <div className="font-semibold text-foreground underline text-blue-500">+977 982-3974222</div>
+                  </a>
                 </div>
               </div>
 

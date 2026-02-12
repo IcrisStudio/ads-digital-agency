@@ -81,7 +81,8 @@ export const Portfolio = () => {
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="group relative rounded-3xl overflow-hidden shadow-2xl bg-black aspect-[9/16] md:aspect-[3/4] lg:aspect-[9/16]"
+                    onClick={() => toggleMute(index)}
+                    className="group relative rounded-3xl overflow-hidden shadow-2xl bg-black aspect-[9/16] md:aspect-[3/4] lg:aspect-[9/16] cursor-pointer"
                   >
                     <video
                       src={video.src}
@@ -89,28 +90,46 @@ export const Portfolio = () => {
                       muted={unmutedIndex !== index}
                       loop
                       playsInline
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
 
-                    {/* Mute Toggle */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleMute(index);
-                      }}
-                      className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-black/60 transition-all shadow-lg"
-                      aria-label={unmutedIndex === index ? "Mute" : "Unmute"}
-                    >
-                      {unmutedIndex === index ? (
-                        <Volume2 size={18} className="text-accent" />
-                      ) : (
-                        <VolumeX size={18} />
+                    {/* Play Icon Overlay (Center) */}
+                    <div className={`absolute inset-0 flex items-center justify-center z-20 transition-all duration-500 ${unmutedIndex === index ? 'opacity-0 scale-150 pointer-events-none' : 'opacity-100'}`}>
+                      <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white shadow-2xl group-hover:scale-110 group-hover:bg-white/20 transition-all">
+                        <Play size={40} fill="currentColor" className="ml-1" />
+                      </div>
+                    </div>
+
+                    {/* Sound Status Indicator (Top Right) */}
+                    <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
+                      {unmutedIndex === index && (
+                        <motion.div
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="px-3 py-1 bg-accent/20 backdrop-blur-md border border-accent/40 rounded-full text-accent text-[10px] font-bold uppercase tracking-widest"
+                        >
+                          Live Audio
+                        </motion.div>
                       )}
-                    </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleMute(index);
+                        }}
+                        className="w-10 h-10 rounded-full bg-black/40 backdrop-blur-md flex items-center justify-center text-white border border-white/20 hover:bg-black/60 transition-all shadow-lg"
+                        aria-label={unmutedIndex === index ? "Mute" : "Unmute"}
+                      >
+                        {unmutedIndex === index ? (
+                          <Volume2 size={18} className="text-accent" />
+                        ) : (
+                          <VolumeX size={18} />
+                        )}
+                      </button>
+                    </div>
 
                     {/* Glassmorphism Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-60 group-hover:opacity-100 transition-all duration-500">
-                      <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-60 group-hover:opacity-100 transition-all duration-500">
+                      <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
                         <span className="inline-block px-3 py-1 bg-accent/20 backdrop-blur-md border border-accent/30 rounded-full text-accent text-xs font-semibold mb-3">
                           {video.category}
                         </span>
@@ -122,7 +141,7 @@ export const Portfolio = () => {
                           <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white">
                             <Play size={16} fill="currentColor" />
                           </div>
-                          Watch Project
+                          {unmutedIndex === index ? "Playing Audio" : "Tap to Play Audio"}
                         </div>
                       </div>
                     </div>
