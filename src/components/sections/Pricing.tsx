@@ -10,11 +10,10 @@ const plans = [
     period: "/ month",
     features: [
       "2 × 4K Short Reels",
-      "2 × AI Voice / AI Videos",
       "6 Graphic Design Posts",
       "Meta & Instagram Page Handling",
       "Meta & Instagram Ads Setup",
-      "Minimum Boosting Budget: $14",
+      "Minimum Boosting Budget: $20",
       "Monthly Performance Report",
       "6 Festival Posters",
     ],
@@ -27,8 +26,7 @@ const plans = [
     price: "Rs. 29,999",
     period: "/ month",
     features: [
-      "4 × 4K Short Reels",
-      "4 × AI Voice / AI Videos",
+      "5 × 4K Short Reels",
       "10 Graphic Design Posts",
       "Complete Meta & Instagram Management",
       "Meta & Instagram Ads Setup",
@@ -47,7 +45,6 @@ const plans = [
     period: "/ month",
     features: [
       "6 × 4K Short Reels",
-      "6 × AI Voice / AI Videos",
       "12 Graphic Design Posts",
       "Full Meta & Instagram Strategy",
       "Meta & Instagram Ads Setup",

@@ -49,15 +49,15 @@ export const AdSimulator = () => {
     const isDiscounted = totalBudget > 100;
     const rate = isDiscounted ? 175 : 180;
     const totalNPR = totalBudget * rate;
-    const minReach = Math.round((totalBudget / 2) * 1000);
-    const maxReach = Math.round((totalBudget / 2) * 3000);
+    const minReach = Math.round(totalBudget * 1000);
+    const maxReach = Math.round(totalBudget * 2500);
     return { totalBudget, isDiscounted, rate, totalNPR, minReach, maxReach };
   }, [budget, days]);
 
   const handleWhatsAppSubmit = () => {
     const categoryLabel =
       categories.find(c => c.id === category)?.[
-        language === "en" ? "labelEn" : "labelNp"
+      language === "en" ? "labelEn" : "labelNp"
       ] || category;
 
     const message = `Hi ADS Digital Agency!
@@ -149,11 +149,10 @@ ${calculations.minReach} - ${calculations.maxReach} people`;
                   <button
                     key={cat.id}
                     onClick={() => setCategory(cat.id)}
-                    className={`p-4 rounded-xl border text-sm transition-colors ${
-                      category === cat.id
+                    className={`p-4 rounded-xl border text-sm transition-colors ${category === cat.id
                         ? "border-accent bg-accent/10 text-accent"
                         : "border-white/[0.08] text-muted-foreground hover:border-accent"
-                    }`}
+                      }`}
                   >
                     {language === "en" ? cat.labelEn : cat.labelNp}
                   </button>
