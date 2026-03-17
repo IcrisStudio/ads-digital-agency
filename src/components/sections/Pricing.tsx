@@ -70,11 +70,10 @@ export const Pricing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
-              className={`p-6 rounded-2xl ${
-                plan.featured
+              className={`p-6 rounded-2xl ${plan.featured
                   ? "bg-primary text-primary-foreground scale-[1.04]"
                   : "bg-white border"
-              }`}
+                }`}
             >
               <h3 className="text-base font-bold text-accent">{plan.name}</h3>
               <p className="text-xs text-muted-foreground mb-4">
@@ -95,11 +94,20 @@ export const Pricing = () => {
                 ))}
               </ul>
 
-              <Button size="sm" className="w-full" asChild>
-                <a href="#contact">
-                  {plan.cta}
-                  <ArrowRight className="w-4 h-4 ml-1" />
-                </a>
+              <Button
+                size="sm"
+                className="w-full"
+                onClick={() => {
+                  const url = new URL(window.location.href);
+                  url.searchParams.set('package', plan.name);
+                  url.hash = 'contact';
+                  window.history.pushState({}, '', url);
+                  window.dispatchEvent(new Event('popstate'));
+                  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
+                {plan.cta}
+                <ArrowRight className="w-4 h-4 ml-1" />
               </Button>
             </motion.div>
           ))}

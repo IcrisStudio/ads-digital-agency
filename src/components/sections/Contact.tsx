@@ -1,22 +1,39 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { MessageCircle, Instagram, Send, Facebook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     brand: "",
     email: "",
+    package: "",
     challenges: "",
   });
+
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const searchParams = new URLSearchParams(window.location.search);
+      const pkg = searchParams.get('package');
+      if (pkg) {
+        setFormData(prev => ({ ...prev, package: pkg }));
+      }
+    };
+
+    handleLocationChange(); // Initial check
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
+  }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const message = `*New Contact Form Submission*\n\n*Name:* ${formData.name}\n*Brand:* ${formData.brand}\n*Email:* ${formData.email}\n*Challenges:* ${formData.challenges}`;
+    const packageText = formData.package ? `\n*Interested Package:* ${formData.package}` : "";
+    const message = `*New Contact Form Submission*${packageText}\n\n*Name:* ${formData.name}\n*Brand:* ${formData.brand}\n*Email:* ${formData.email}\n*Challenges:* ${formData.challenges}`;
     const encodedMessage = encodeURIComponent(message);
 
     window.open(`https://wa.me/9779823974222?text=${encodedMessage}`, '_blank');
@@ -135,6 +152,26 @@ export const Contact = () => {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="h-12 rounded-xl border-border bg-white"
                 />
+              </div>
+
+              <div>
+                <label className="text-sm font-medium text-foreground mb-2 block">
+                  Interested Package (Optional)
+                </label>
+                <Select
+                  value={formData.package}
+                  onValueChange={(value) => setFormData({ ...formData, package: value })}
+                >
+                  <SelectTrigger className="h-12 rounded-xl border-border bg-white text-base">
+                    <SelectValue placeholder="Select a package" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Starter Boost">Starter Boost</SelectItem>
+                    <SelectItem value="Growth Boost">Growth Boost</SelectItem>
+                    <SelectItem value="Scale Boost">Scale Boost</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
 
               <div>
