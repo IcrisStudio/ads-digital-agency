@@ -15,8 +15,11 @@ export const Contact = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+
+    const message = `*New Contact Form Submission*\n\n*Name:* ${formData.name}\n*Brand:* ${formData.brand}\n*Email:* ${formData.email}\n*Challenges:* ${formData.challenges}`;
+    const encodedMessage = encodeURIComponent(message);
+
+    window.open(`https://wa.me/9779823974222?text=${encodedMessage}`, '_blank');
   };
 
   return (
