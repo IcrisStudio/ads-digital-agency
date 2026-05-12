@@ -14,28 +14,7 @@ import video2 from "@/assets/Videos/2.mp4";
 import video3 from "@/assets/Videos/3.mp4";
 import video4 from "@/assets/Videos/4.mp4";
 
-const videoShowcase = [
-  {
-    src: video1,
-    category: "Commercial",
-    title: "Brand Storytelling",
-  },
-  {
-    src: video2,
-    category: "Product",
-    title: "Elite Product Reveal",
-  },
-  {
-    src: video3,
-    category: "Social Media",
-    title: "Viral Motion Content",
-  },
-  {
-    src: video4,
-    category: "Production",
-    title: "Cinematic Experience",
-  },
-];
+const videoShowcase = [video1, video2, video3, video4];
 
 export const Portfolio = () => {
   const [unmutedIndex, setUnmutedIndex] = useState<number | null>(null);
@@ -74,7 +53,7 @@ export const Portfolio = () => {
             className="w-full"
           >
             <CarouselContent className="-ml-4">
-              {videoShowcase.map((video, index) => (
+              {videoShowcase.map((src, index) => (
                 <CarouselItem key={index} className="pl-4 basis-full md:basis-1/2 lg:basis-1/3">
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -85,7 +64,7 @@ export const Portfolio = () => {
                     className="group relative rounded-3xl overflow-hidden shadow-2xl bg-black aspect-[9/16] md:aspect-[3/4] lg:aspect-[9/16] cursor-pointer"
                   >
                     <video
-                      src={video.src}
+                      src={src}
                       autoPlay
                       muted={unmutedIndex !== index}
                       loop
@@ -102,15 +81,6 @@ export const Portfolio = () => {
 
                     {/* Sound Status Indicator (Top Right) */}
                     <div className="absolute top-4 right-4 z-30 flex items-center gap-2">
-                      {unmutedIndex === index && (
-                        <motion.div
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          className="px-3 py-1 bg-accent/20 backdrop-blur-md border border-accent/40 rounded-full text-accent text-[10px] font-bold uppercase tracking-widest"
-                        >
-                          Live Audio
-                        </motion.div>
-                      )}
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -130,18 +100,11 @@ export const Portfolio = () => {
                     {/* Glassmorphism Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/20 to-transparent opacity-60 group-hover:opacity-100 transition-all duration-500">
                       <div className="absolute bottom-0 left-0 right-0 p-8 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                        <span className="inline-block px-3 py-1 bg-accent/20 backdrop-blur-md border border-accent/30 rounded-full text-accent text-xs font-semibold mb-3">
-                          {video.category}
-                        </span>
-                        <h3 className="text-white text-2xl font-bold leading-tight">
-                          {video.title}
-                        </h3>
-
-                        <div className="mt-6 flex items-center gap-2 text-white/70 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                        <div className="flex items-center gap-2 text-white/90 text-sm font-medium">
                           <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center text-white">
                             <Play size={16} fill="currentColor" />
                           </div>
-                          {unmutedIndex === index ? "Playing Audio" : "Tap to Play Audio"}
+                          Tap to play audio
                         </div>
                       </div>
                     </div>

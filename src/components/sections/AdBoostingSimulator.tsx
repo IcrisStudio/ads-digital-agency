@@ -47,7 +47,7 @@ export const AdSimulator = () => {
   const calculations = useMemo(() => {
     const totalBudget = budget * days;
     const isDiscounted = totalBudget > 100;
-    const rate = isDiscounted ? 175 : 180;
+    const rate = isDiscounted ? 180 : 185;
     const totalNPR = totalBudget * rate;
     const minReach = Math.round(totalBudget * 1000);
     const maxReach = Math.round(totalBudget * 2500);
