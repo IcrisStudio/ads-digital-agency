@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, type MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -27,12 +27,31 @@ export const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  /** Mobile: closing the menu in the same tick unmounts `<a href="#...">` before the browser follows the hash. */
+  const scrollToSectionId = useCallback((hash: string) => {
+    const id = hash.startsWith("#") ? hash.slice(1) : hash;
+    if (!id) return;
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState(null, "", `/#${id}`);
+  }, []);
+
+  const handleMobileNavClick = useCallback(
+    (href: string) => (e: MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
+      window.setTimeout(() => scrollToSectionId(href), 32);
+    },
+    [scrollToSectionId]
+  );
+
   return (
     <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled
+      className={`fixed top-0 left-0 right-0 transition-all duration-300 ${isMobileMenuOpen ? "z-[100]" : "z-50"} ${isScrolled
           ? "bg-white/90 backdrop-blur-xl shadow-card py-3"
           : "bg-transparent py-5"
         }`}
@@ -107,7 +126,7 @@ export const Header = () => {
                 <a
                   key={link.href}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={handleMobileNavClick(link.href)}
                   className="text-foreground font-medium text-lg py-2"
                 >
                   {t(link.labelKey)}
@@ -117,7 +136,9 @@ export const Header = () => {
                 <LanguageToggle />
               </div>
               <Button variant="accent" size="lg" asChild className="mt-4">
-                <a href="#contact">{t('freeAudit')}</a>
+                <a href="#contact" onClick={handleMobileNavClick("#contact")}>
+                  {t("freeAudit")}
+                </a>
               </Button>
             </nav>
           </motion.div>

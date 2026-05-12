@@ -113,6 +113,11 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display font-bold tracking-tight;
   }
+
+  /* Fixed header clears in-page anchor targets */
+  main section[id] {
+    scroll-margin-top: 5.5rem;
+  }
 }
 
 @layer components {
