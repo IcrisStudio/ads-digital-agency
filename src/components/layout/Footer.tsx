@@ -24,6 +24,9 @@ export const Footer = () => {
             <p className="text-primary-foreground/70 max-w-sm">
               Turning average brands into digital leaders through cinematic precision and strategic excellence.
             </p>
+            <p className="text-primary-foreground/70 mt-3">
+              Location: Inaruwa
+            </p>
           </motion.div>
 
           {/* Quick Links */}

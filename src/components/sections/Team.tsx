@@ -6,15 +6,17 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import laxmanPhoto from "@/assets/team-member-images/Laxman.png";
 import salinaPhoto from "@/assets/team-member-images/salina.jpg";
-import mukeshPhoto from "@/assets/team-member-images/mukesh.png";
 import adsDigitalPhoto from "@/assets/team-member-images/ads-digital.png";
+import ttPhoto from "@/assets/team-member-images/tt.png";
+import pappuPhoto from "@/assets/team-member-images/pappu-kumar-mehta.png";
 
 /** All portrait assets in `src/assets/team-member-images/` — order is display order only. */
 const teamImages = [
   { id: "ads-digital", src: adsDigitalPhoto, altEn: "ADS Digital team", altNp: "ADS Digital टोली" },
   { id: "laxman", src: laxmanPhoto, altEn: "Team member portrait", altNp: "टोली सदस्य पोर्ट्रेट" },
-  { id: "mukesh", src: mukeshPhoto, altEn: "Team member portrait", altNp: "टोली सदस्य पोर्ट्रेट" },
   { id: "salina", src: salinaPhoto, altEn: "Team member portrait", altNp: "टोली सदस्य पोर्ट्रेट" },
+  { id: "tt", src: ttPhoto, altEn: "Team member portrait", altNp: "टोली सदस्य पोर्ट्रेट" },
+  { id: "pappu", src: pappuPhoto, altEn: "Pappu Kumar Mehta", altNp: "पप्पु कुमार मेहता" },
 ] as const;
 
 type TeamImageItem = (typeof teamImages)[number];
@@ -81,7 +83,7 @@ export const Team = () => {
             /* Fluid columns: 1 → 2 → 4 without oversized cards on huge screens */
             "grid-cols-[repeat(auto-fill,minmax(min(100%,9.5rem),1fr))]",
             "sm:grid-cols-[repeat(auto-fill,minmax(min(100%,11rem),1fr))]",
-            "lg:grid-cols-4 lg:gap-7"
+            "lg:grid-cols-5 lg:gap-7"
           )}
         >
           {teamImages.map((item) => (

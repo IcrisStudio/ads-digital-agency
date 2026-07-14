@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, Instagram, Send, Facebook } from "lucide-react";
+import { MessageCircle, Instagram, Send, Facebook, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -70,6 +70,16 @@ export const Contact = () => {
               transition={{ duration: 0.6 }}
               className="lg:col-span-2 space-y-6"
             >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
+                  <MapPin className="w-6 h-6 text-accent" />
+                </div>
+                <div>
+                  <div className="text-sm text-muted-foreground">Location</div>
+                  <div className="font-semibold text-foreground">Inaruwa</div>
+                </div>
+              </div>
+
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
                   <MessageCircle className="w-6 h-6 text-accent fill-current" />
