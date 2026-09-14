@@ -11,7 +11,6 @@ const navLinks = [
   { labelKey: "portfolio", href: "#portfolio" },
   { labelKey: "pricing", href: "#pricing" },
   { labelKey: "simulator", href: "#simulator" },
-  { labelKey: "team", href: "#team" },
 ];
 
 export const Header = () => {

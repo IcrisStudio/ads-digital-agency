@@ -10,11 +10,15 @@ import {
 } from "@/components/ui/carousel";
 
 import video1 from "@/assets/Videos/1.mp4";
-import video2 from "@/assets/Videos/2.mp4";
 import video3 from "@/assets/Videos/3.mp4";
 import video4 from "@/assets/Videos/4.mp4";
 
-const videoShowcase = [video1, video2, video3, video4];
+const videoShowcase = [
+  video1,
+  "https://pub-1823d0712ffd4e63b0ee0d822a5e0a3c.r2.dev/ads-digital/uk%20v4.mov",
+  video3,
+  video4,
+];
 
 export const Portfolio = () => {
   const [unmutedIndex, setUnmutedIndex] = useState<number | null>(null);

@@ -10,7 +10,6 @@ import { Contact } from "@/components/sections/Contact";
 import { Footer } from "@/components/layout/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { AdSimulator } from "@/components/sections/AdBoostingSimulator";
-import { Team } from "@/components/sections/Team";
 
 const Index = () => {
   return (
@@ -23,8 +22,7 @@ const Index = () => {
         <Comparison />
         <Testimonials />
         <Pricing />
-<AdSimulator />
-<Team />
+        <AdSimulator />
         <Contact />
         <Footer />
         <WhatsAppButton />
